@@ -1,4 +1,4 @@
-![WebApps](https://developers.google.com/web/progressive-web-apps/images/pwa-fast_720.png)
+![WebApps](https://raw.githubusercontent.com/sincco/webappdocker/master/webapp.png)
 
 #  WebApps Docker for Development
 
