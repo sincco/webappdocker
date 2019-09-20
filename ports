@@ -1,0 +1,31 @@
+#!/bin/bash
+
+search_free_port () {
+    for i in {0..9}
+        do
+            nc -z 127.0.0.1 70$1$i;
+            if [ $? -eq 1 ] ; then
+                echo 70$1$i
+                break
+            else
+               continue
+            fi
+        done
+}
+
+puerto_web=$(search_free_port 1)
+puerto_xdebug=$(search_free_port 2)
+puerto_db=$(search_free_port 3)
+puerto_phpmyadmin=$(search_free_port 4)
+
+sed -i -e "s/<puerto_web>/$puerto_web/g" docker-compose.yml
+sed -i -e "s/<puerto_xdebug>/$puerto_xdebug/g" docker-compose.yml
+sed -i -e "s/<puerto_db>/$puerto_db/g" docker-compose.yml
+sed -i -e "s/<puerto_phpmyadmin>/$puerto_phpmyadmin/g" docker-compose.yml
+
+echo "
+=================== 🌙 Starting 🌙 =================
+
+      🌎 Web server: http://localhost:$puerto_web
+      ⚙️ PHPMyAdmin: http://localhost:$puerto_phpmyadmin
+"
