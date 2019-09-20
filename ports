@@ -17,8 +17,10 @@ puerto_web=$(search_free_port 1)
 puerto_xdebug=$(search_free_port 2)
 puerto_db=$(search_free_port 3)
 puerto_phpmyadmin=$(search_free_port 4)
+puerto_vue=$(search_free_port 5)
 
 sed -i -e "s/<puerto_web>/$puerto_web/g" docker-compose.yml
+sed -i -e "s/<puerto_vue>/$puerto_vue/g" docker-compose.yml
 sed -i -e "s/<puerto_xdebug>/$puerto_xdebug/g" docker-compose.yml
 sed -i -e "s/<puerto_db>/$puerto_db/g" docker-compose.yml
 sed -i -e "s/<puerto_phpmyadmin>/$puerto_phpmyadmin/g" docker-compose.yml
@@ -27,5 +29,6 @@ echo "
 =================== 🌙 Starting 🌙 =================
 
       🌎 Web server: http://localhost:$puerto_web
+      🌎 VueJs: http://localhost:$puerto_vue
       ⚙️ PHPMyAdmin: http://localhost:$puerto_phpmyadmin
 "
