@@ -1,0 +1,54 @@
+version: '2'
+services:
+  apache:
+    image: sincco/webapps
+    ports:
+      - "<puerto_web>:80" # web
+      - "<puerto_xdebug>:9000" # xdebug
+    volumes:
+      - ./src:/var/www/html
+      - ~/.composer:/var/www/.composer
+      - ~/.npm:/var/www/.npm
+    environment:
+      XDEBUG_CONFIG: "remote_host=localhost"
+      PHP_IDE_CONFIG: "serverName=Docker"
+    depends_on:
+      - db
+    links:
+      - db
+    networks:
+      - <project_name>-network
+
+  db:
+    image: mariadb
+    ports:
+     - <puerto_db>:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=webapp
+      - MYSQL_USER=webapp
+      - MYSQL_PASSWORD=webapp
+    volumes:
+      - ./dbdata:/var/lib/mysql
+    networks:
+      - <project_name>-network
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    environment:
+     - PMA_HOST=db
+     - PMA_USER=root
+     - PMA_PASSWORD=root
+     - MYSQL_ROOT_PASSWORD=root
+    ports:
+     - <puerto_phpmyadmin>:80
+    networks:
+      - <project_name>-network
+
+networks:
+  <project_name>-network:
+    driver: bridge
+
+volumes:
+  dbdata:
+    driver: local
