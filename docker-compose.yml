@@ -4,7 +4,7 @@ services:
     image: sincco/webapps
     ports:
       - "<puerto_web>:80" # web
-      - "<puerto_vue>:8080" # vuejs
+      - "<puerto_vue>:<puerto_vue>" # vuejs
       - "<puerto_xdebug>:9000" # xdebug
     volumes:
       - ./src:/var/www/html
